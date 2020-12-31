@@ -97,3 +97,9 @@ R1Q2 Forums: http://www.r1ch.net/forum/index.php?board=8.0
 "Getting R1Q2 to work proper": http://cato.troligt.com/filer/r1q2.htm
 "How to install R1Q2": http://www.kontula.net/comments.php?id=145
 "r1q2 faq" (English/Estonian): http://r1q2.quake2.ee/
+
+Notes from QwazyWabbit
+*Dependencies*
+VS2019 project files updated.
+Build now depends on vcpkg libraries.
+Install appropriate triplets for libpng and libjpeg for your target builds.
