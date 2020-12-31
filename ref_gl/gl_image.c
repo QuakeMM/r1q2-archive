@@ -721,7 +721,7 @@ void LoadPNG (const char *name, byte **pic, int *width, int *height)
 
 	png_read_info(png_ptr, info_ptr);
 
-	if (info_ptr->height > MAX_TEXTURE_DIMENSIONS)
+	if (png_get_image_width(png_ptr, info_ptr) > MAX_TEXTURE_DIMENSIONS)
 	{
         png_destroy_read_struct(&png_ptr, &info_ptr, (png_infopp)NULL);
 		ri.FS_FreeFile (PngFileBuffer.Buffer);
@@ -729,29 +729,31 @@ void LoadPNG (const char *name, byte **pic, int *width, int *height)
 		return;
 	}
 
-	if (info_ptr->color_type == PNG_COLOR_TYPE_PALETTE)
+	if (png_get_color_type(png_ptr, info_ptr) == PNG_COLOR_TYPE_PALETTE)
 	{
 		png_set_palette_to_rgb (png_ptr);
 		png_set_filler(png_ptr, 0xFF, PNG_FILLER_AFTER);
 	}
 
-	if (info_ptr->color_type == PNG_COLOR_TYPE_RGB)
+	if (png_get_color_type(png_ptr, info_ptr) == PNG_COLOR_TYPE_RGB)
 		png_set_filler(png_ptr, 0xFF, PNG_FILLER_AFTER);
 
-	if ((info_ptr->color_type == PNG_COLOR_TYPE_GRAY) && info_ptr->bit_depth < 8)
-		png_set_gray_1_2_4_to_8(png_ptr);
+	if ((png_get_color_type(png_ptr, info_ptr) == PNG_COLOR_TYPE_GRAY) &&
+		png_get_bit_depth(png_ptr, info_ptr) < 8)
+			png_set_expand_gray_1_2_4_to_8(png_ptr);
 
 	if (png_get_valid(png_ptr, info_ptr, PNG_INFO_tRNS))
 		png_set_tRNS_to_alpha(png_ptr);
 
-	if (info_ptr->color_type == PNG_COLOR_TYPE_GRAY || info_ptr->color_type == PNG_COLOR_TYPE_GRAY_ALPHA)
-		png_set_gray_to_rgb(png_ptr);
+	if (png_get_color_type(png_ptr, info_ptr) == PNG_COLOR_TYPE_GRAY ||
+		png_get_color_type(png_ptr, info_ptr) == PNG_COLOR_TYPE_GRAY_ALPHA)
+			png_set_gray_to_rgb(png_ptr);
 
-	if (info_ptr->bit_depth == 16)
+	if (png_get_bit_depth(png_ptr, info_ptr) == 16)
 		png_set_strip_16(png_ptr);
 
-	if (info_ptr->bit_depth < 8)
-        png_set_packing(png_ptr);
+	if (png_get_bit_depth(png_ptr, info_ptr) < 8)
+		png_set_packing(png_ptr);
 
 	if (png_get_gAMA(png_ptr, info_ptr, &file_gamma))
 		png_set_gamma (png_ptr, 2.0, file_gamma);
@@ -760,15 +762,15 @@ void LoadPNG (const char *name, byte **pic, int *width, int *height)
 
 	rowbytes = png_get_rowbytes(png_ptr, info_ptr);
 
-	*pic = malloc (info_ptr->height * rowbytes);
+	*pic = malloc(png_get_image_height(png_ptr, info_ptr) * rowbytes);
 
-	for (i = 0; i < info_ptr->height; i++)
+	for (i = 0; i < png_get_image_height(png_ptr, info_ptr); i++)
 		row_pointers[i] = *pic + i*rowbytes;
 
 	png_read_image(png_ptr, row_pointers);
 
-	*width = info_ptr->width;
-	*height = info_ptr->height;
+	*width = png_get_image_width(png_ptr, info_ptr);
+	*height = png_get_image_height(png_ptr, info_ptr);
 
 	png_read_end(png_ptr, end_info);
 	png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
@@ -1520,7 +1522,7 @@ void EXPORT jpg_skip_input_data(j_decompress_ptr cinfo, long num_bytes)
     cinfo->src->bytes_in_buffer -= (size_t) num_bytes;
 }
 
-void jpeg_mem_src (j_decompress_ptr cinfo, byte *mem, int len)
+void q2_jpeg_mem_src(j_decompress_ptr cinfo, byte* mem, int len)
 {
     cinfo->src = (struct jpeg_source_mgr *)(*cinfo->mem->alloc_small)((j_common_ptr) cinfo, JPOOL_PERMANENT, sizeof(struct jpeg_source_mgr));
     cinfo->src->init_source = jpg_null;
@@ -1561,7 +1563,7 @@ void LoadJPG (const char *filename, byte **pic, int *width, int *height)
 
 	cinfo.err = jpeg_std_error(&jerr);
 	jpeg_create_decompress(&cinfo);
-	jpeg_mem_src(&cinfo, rawdata, rawsize);
+	q2_jpeg_mem_src(&cinfo, rawdata, rawsize);
 	jpeg_read_header(&cinfo, true);
 	jpeg_start_decompress(&cinfo);
 
@@ -3359,9 +3361,10 @@ int Draw_GetPalette (void)
 	// get the palette
 
 	LoadPCX ("pics/colormap.pcx", &pic, &pal, &width, &height);
-	if (!pal)
-		ri.Sys_Error (ERR_FATAL, "R1GL was unable to load the colormap (pics/colormap.pcx).\n\nThis file is required for Quake II to function properly. Please make sure that all files are in the correct directories and that baseq2/pak0.pak is installed and readable (not hidden or system).");
-
+	if (!pal) {
+		ri.Sys_Error(ERR_FATAL, "R1GL was unable to load the colormap (pics/colormap.pcx).\n\nThis file is required for Quake II to function properly. Please make sure that all files are in the correct directories and that baseq2/pak0.pak is installed and readable (not hidden or system).");
+		return 0; // Never happens.
+	}
 	for (i=0 ; i<256 ; i++)
 	{
 		r = pal[i*3+0];

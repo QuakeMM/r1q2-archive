@@ -18,7 +18,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef _QSHARED_H
+#pragma once
 
 #include <math.h>
 #include <stdio.h>
@@ -49,16 +49,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // q_shared.h -- included first by ALL program modules
 
 #ifdef _WIN32
+#pragma warning(disable : 4244)	// conversion from 'type1' to 'type2', possible loss of data
+#pragma warning(disable : 4100)	// unreferenced formal parameter
+#pragma warning(disable : 4305)	// truncation from 'double' to 'float'
+#if _MSC_VER > 1500
+#pragma warning(disable : 4996)	// disable warnings about deprecated CRT functions (_CRT_SECURE_NO_WARNINGS).
+#endif /*_MSC_VER */
+#endif /* _WIN32 */
+
+#ifdef _WIN32
 #ifdef _MSC_VER
-// unknown pragmas are SUPPOSED to be ignored, but....
-//#pragma warning(disable : 4244)     // MIPS
-//#pragma warning(disable : 4136)     // X86
-//#pragma warning(disable : 4051)     // ALPHA
-
-//#pragma warning(disable : 4244)		// truncation
 #pragma warning(disable : 4018)     // signed/unsigned mismatch
-//#pragma warning(disable : 4305)		// truncation from const double to float
-
 #pragma warning(disable : 4096)		// __cdecl must be used with '...'*/
 #pragma warning(disable : 4142)		//benign redefinition
 
@@ -1543,6 +1544,3 @@ extern int vidref_val;
 // PGM
 // ==================
 
-#define _QSHARED_H
-
-#endif

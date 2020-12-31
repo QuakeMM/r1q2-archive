@@ -436,7 +436,7 @@ Set a specific sky and rotation speed
 void SCR_Sky_f (void)
 {
 	float	rotate;
-	vec3_t	axis;
+	vec3_t	axis = { 0 };
 
 	if (Cmd_Argc() < 2)
 	{
@@ -1410,13 +1410,17 @@ void SCR_ExecuteLayoutString (char *s)
 					token = COM_Parse (&s);
 					index = atoi(token);
 
-					if (index < 0 || index >= MAX_STATS)
+					if (index < 0 || index >= MAX_STATS) {
 						Com_Error (ERR_DROP, "Bad stats index %d in block 'stat_string' whilst parsing layout string", index);
+						return; //never happens
+					}
 
 					index = cl.frame.playerstate.stats[index];
 
-					if (index < 0 || index >= MAX_CONFIGSTRINGS)
-						Com_Error (ERR_DROP, "Bad stat_string index %d whilst parsing layout string", index);
+					if (index < 0 || index >= MAX_CONFIGSTRINGS) {
+						Com_Error(ERR_DROP, "Bad stat_string index %d whilst parsing layout string", index);
+						return; //never happens
+					}
 
 					DrawString (x, y, cl.configstrings[index]);
 					continue;
@@ -1457,8 +1461,10 @@ void SCR_ExecuteLayoutString (char *s)
 					token = COM_Parse (&s);
 					index = atoi(token);
 
-					if (index < 0 || index >= MAX_STATS)
-						Com_Error (ERR_DROP, "Bad stats index %d in block 'if' whilst parsing layout string", index);
+					if (index < 0 || index >= MAX_STATS) {
+						Com_Error(ERR_DROP, "Bad stats index %d in block 'if' whilst parsing layout string", index);
+						return; //never happens
+					}
 
 					value = cl.frame.playerstate.stats[index];
 					if (!value)

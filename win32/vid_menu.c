@@ -477,9 +477,10 @@ const char *VID_MenuKey( int key )
 {
 	menuframework_s *m = s_current_menu;
 
-	if (!m)
-		Com_Error (ERR_DROP, "VID_MenuKey: NULL s_current_menu");
-
+	if (!m) {
+		Com_Error(ERR_DROP, "VID_MenuKey: NULL s_current_menu");
+		return NULL; // Never happens
+	}
 	switch ( key )
 	{
 	case K_ESCAPE:

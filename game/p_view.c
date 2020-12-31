@@ -152,7 +152,7 @@ void P_DamageFeedback (edict_t *player)
 	if (client->damage_alpha < 0.2)
 		client->damage_alpha = 0.2f;
 	if (client->damage_alpha > 0.6)
-		client->damage_alpha = 0.6;		// don't go too saturated
+		client->damage_alpha = 0.6f;		// don't go too saturated
 
 	// the color of the blend will vary based on how much was absorbed
 	// by different armors
@@ -304,7 +304,7 @@ void SV_CalcViewOffset (edict_t *ent)
 	ratio = (ent->client->fall_time - level.time) / FALL_TIME;
 	if (ratio < 0)
 		ratio = 0;
-	v[2] -= ratio * ent->client->fall_value * 0.4;
+	v[2] -= ratio * ent->client->fall_value * 0.4f;
 
 	// add bob height
 
@@ -433,7 +433,7 @@ void SV_CalcBlend (edict_t *ent)
 		ent->client->ps.rdflags &= ~RDF_UNDERWATER;
 
 	if (contents & (CONTENTS_SOLID|CONTENTS_LAVA))
-		SV_AddBlend (1.0f, 0.3, 0.0, 0.6, ent->client->ps.blend);
+		SV_AddBlend (1.0f, 0.3f, 0.0, 0.6, ent->client->ps.blend);
 	else if (contents & CONTENTS_SLIME)
 		SV_AddBlend (0.0, 0.1f, 0.05, 0.6, ent->client->ps.blend);
 	else if (contents & CONTENTS_WATER)
@@ -1011,7 +1011,7 @@ void ClientEndServerFrame (edict_t *ent)
 	// calculate speed and cycle to be used for
 	// all cyclic walking effects
 	//
-	xyspeed = sqrt(ent->velocity[0]*ent->velocity[0] + ent->velocity[1]*ent->velocity[1]);
+	xyspeed = sqrtf(ent->velocity[0]*ent->velocity[0] + ent->velocity[1]*ent->velocity[1]);
 
 	if (xyspeed < 5)
 	{
@@ -1034,7 +1034,7 @@ void ClientEndServerFrame (edict_t *ent)
 		bobtime *= 4;
 
 	bobcycle = (int)bobtime;
-	bobfracsin = (float)fabs(sin(bobtime*M_PI));
+	bobfracsin = (float)fabsf(sinf(bobtime*M_PI));
 
 	// detect hitting the floor
 	P_FallingDamage (ent);
