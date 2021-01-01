@@ -99,7 +99,7 @@ R1Q2 Forums: http://www.r1ch.net/forum/index.php?board=8.0
 "r1q2 faq" (English/Estonian): http://r1q2.quake2.ee/
 
 Notes from QwazyWabbit
-*Dependencies*
+Dependencies
 VS2019 project files updated.
 Build now depends on vcpkg libraries.
 Install appropriate triplets for libpng and libjpeg for your target builds.
