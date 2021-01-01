@@ -503,12 +503,14 @@ extern	int	body_armor_index;
 extern	int	meansOfDeath;
 
 
-extern	edict_t			*g_edicts;
+#define q_offsetof(t, m)    ((size_t)&((t *)0)->m)
 
-#define	FOFS(x) (int)&(((edict_t *)0)->x)
-#define	STOFS(x) (int)&(((spawn_temp_t *)0)->x)
-#define	LLOFS(x) (int)&(((level_locals_t *)0)->x)
-#define	CLOFS(x) (int)&(((gclient_t *)0)->x)
+extern	edict_t* g_edicts;
+
+#define FOFS(x)     q_offsetof(edict_t, x)
+#define STOFS(x)    q_offsetof(spawn_temp_t, x)
+#define LLOFS(x) (size_t)&(((level_locals_t *)0)->x)
+#define CLOFS(x) (size_t)&(((gclient_t *)0)->x)
 
 #ifdef random
 #undef random
