@@ -18,6 +18,13 @@ idnewt:28000
 void NET_OpenIP (int flags);
 int NET_IPSocket (char *net_interface, int port);
 
+#ifdef _WIN32 
+#if _MSC_VER > 1920	// Visual Studio 2019 RTW (16.0)
+#pragma warning (disable: 4548) // Microsoft's FD_SET macro contains while(0,0) in WinSock2.h
+// The while(0,0) construct was needed to suppress C4127, this is not an issue in VS2019 and later.
+#endif
+#endif
+
 #ifndef _WIN32
 #define closesocket close
 #define ioctlsocket ioctl

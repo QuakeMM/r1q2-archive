@@ -1879,7 +1879,7 @@ DWORD R1Q2ExceptionHandler (DWORD exceptionCode, LPEXCEPTION_POINTERS exceptionI
 
 	for (;;)
 	{
-		snprintf (tempPath, sizeof(tempPath)-1, "%s\\R1Q2CrashLog%.4d-%.2d-%.2d%_%d.txt", searchPath, timeInfo.wYear, timeInfo.wMonth, timeInfo.wDay, i);
+		snprintf (tempPath, sizeof(tempPath)-1, "%s\\R1Q2CrashLog%.4d-%.2d-%.2d_%d.txt", searchPath, timeInfo.wYear, timeInfo.wMonth, timeInfo.wDay, i);
 		if (Sys_FileLength (tempPath) == -1)
 			break;
 		i++;
@@ -2028,7 +2028,7 @@ DWORD R1Q2ExceptionHandler (DWORD exceptionCode, LPEXCEPTION_POINTERS exceptionI
 		"This crash appears to have occured in the '%s' module.%s\r\n\r\n", szModuleName, gameMsg);
 #endif
 
-	fprintf (fhReport, "**** UNHANDLED EXCEPTION: %x\r\nFault address: %I64p (%s)\r\n", exceptionCode, InstructionPtr, szModuleName);
+	fprintf (fhReport, "**** UNHANDLED EXCEPTION: %x\r\nFault address: %I64d (%s)\r\n", exceptionCode, InstructionPtr, szModuleName);
 
 	fprintf (fhReport, PRODUCTNAME " module: %s(%s) (Version: %s)\r\n", binary_name, R1BINARY, R1Q2_VERSION_STRING);
 	fprintf (fhReport, "Windows version: %d.%d (Build %d) %s\r\n\r\n", osInfo.dwMajorVersion, osInfo.dwMinorVersion, osInfo.dwBuildNumber, osInfo.szCSDVersion);
@@ -2456,8 +2456,10 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 
 	__try
 	{
+#ifdef _M_IX86
 		Sys_SetFPU (sys_fpu_bits->intvalue);
 		Sys_CheckFPUStatus ();
+#endif
 
 		Qcommon_Init (argc, argv);
 
@@ -2552,8 +2554,10 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 			else
 				goodspins++;
 
+#ifdef _M_IX86
 			Sys_SetFPU (sys_fpu_bits->intvalue);
-			//Sys_CheckFPUStatus ();
+			Sys_CheckFPUStatus ();
+#endif
 			Qcommon_Frame (time);
 
 			oldtime = newtime;

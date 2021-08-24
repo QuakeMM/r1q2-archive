@@ -864,8 +864,6 @@ void _VectorCopy (vec3_t in, vec3_t out)
 	cross[2] = v1[0]*v2[1] - v1[1]*v2[0];
 }*/
 
-double EXPORT sqrt(double x);
-
 vec_t VectorLength(vec3_t v)
 {
 	float	length;
@@ -1318,26 +1316,24 @@ int Q_stricmp (const char *s1, const char *s2)
 }
 #endif
 
+static char	bigbuffer[0x10000];  //QW// For Com_sprintf
 
 int Com_sprintf (char /*@out@*/*dest, int size, const char *fmt, ...)
 {
 	int			len;
 	va_list		argptr;
-	char		bigbuffer[0x10000];
 
 	va_start (argptr,fmt);
 	len = Q_vsnprintf (bigbuffer, sizeof(bigbuffer), fmt, argptr);
 	va_end (argptr);
 
-	if (len == -1 || len == size)
+	if (len == -1 || len > size)
 	{
 		Com_Printf ("Com_sprintf: overflow of size %d\n", LOG_GENERAL, size);
 		len = size-1;
 	}
 
-	bigbuffer[size-1] = '\0';
-	strcpy (dest, bigbuffer);
-
+	strncpy(dest, bigbuffer, (size_t)size - 1);
 	return len;
 }
 

@@ -26,7 +26,7 @@ cvar_t	*cl_http_filelists;
 cvar_t	*cl_http_proxy;
 cvar_t	*cl_http_max_connections;
 
-static enum
+enum
 {
 	HTTPDL_ABORT_NONE,
 	HTTPDL_ABORT_SOFT,
