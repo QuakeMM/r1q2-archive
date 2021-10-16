@@ -697,6 +697,8 @@ void AttackFinished (edict_t *self, float time);
 void monster_death_use (edict_t *self);
 void M_CatagorizePosition (edict_t *ent);
 qboolean M_CheckAttack (edict_t *self);
+void M_FliesOff(edict_t* self);
+void M_FliesOn(edict_t* self);
 void M_FlyCheck (edict_t *self);
 void M_CheckGround (edict_t *ent);
 
