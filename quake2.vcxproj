@@ -114,14 +114,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dedicated Only|Win32'">
-    <IncludePath>C:\Users\Geoff\Documents\Visual Studio 2010\Projects\zlib;$(IncludePath)</IncludePath>
-    <ReferencePath>C:\Users\Geoff\Documents\Visual Studio 2010\Projects\zlib\Release;$(ReferencePath)</ReferencePath>
-    <LibraryPath>C:\Users\Geoff\Documents\Visual Studio 2010\Projects\zlib\Release;$(LibraryPath)</LibraryPath>
+    <TargetName>$(ProjectName)ded</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dedicated Only|x64'">
     <IncludePath>C:\Users\Geoff\Documents\Visual Studio 2010\Projects\zlib;$(IncludePath)</IncludePath>
     <ReferencePath>C:\Users\Geoff\Documents\Visual Studio 2010\Projects\zlib\Release;$(ReferencePath)</ReferencePath>
     <LibraryPath>C:\Users\Geoff\Documents\Visual Studio 2010\Projects\zlib\Release;$(LibraryPath)</LibraryPath>
+    <TargetName>$(ProjectName)ded64</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -129,15 +128,18 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
-  <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Dedicated Only|Win32'">
-    <VcpkgConfiguration>Release</VcpkgConfiguration>
+  <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Dedicated Only|Win32'" />
+  <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Dedicated Only|x64'">
+    <VcpkgTriplet>
+    </VcpkgTriplet>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;USE_CURL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(_ZVcpkgCurrentInstalledDir)include\;$(_ZVcpkgCurrentInstalledDir)lib\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Midl>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -156,12 +158,11 @@
     </Bscmake>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalDependencies>winmm.lib;wsock32.lib;dxguid.lib;dinput8.lib;dsound.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>winmm.lib;wsock32.lib;dxguid.lib;dinput8.lib;dsound.lib;zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <OutputFile>$(OutDir)\r1q2.exe</OutputFile>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(OutDir)r1q2.exe c:\quake2\r1q2.exe</Command>
+      <Command>copy $(OutDir)r1q2.* c:\quake2\r1q2.*</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>Copying files to Quake2 root.</Message>
@@ -174,6 +175,7 @@
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(_ZVcpkgCurrentInstalledDir)include\;$(_ZVcpkgCurrentInstalledDir)lib\</AdditionalIncludeDirectories>
     </ClCompile>
     <Midl>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -205,13 +207,15 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dedicated Only|Win32'">
     <ClCompile>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <Optimization>MaxSpeed</Optimization>
       <WarningLevel>Level3</WarningLevel>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;DEDICATED_ONLY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
     </ClCompile>
     <Midl>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -228,7 +232,6 @@
     <Link>
       <AdditionalDependencies>winmm.lib;wsock32.lib;zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
-      <AdditionalOptions>/LTCG %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dedicated Only|x64'">
@@ -256,6 +259,8 @@
       <AdditionalDependencies>winmm.lib;wsock32.lib;zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
       <AdditionalOptions>/LTCG %(AdditionalOptions)</AdditionalOptions>
+      <ImportLibrary>
+      </ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -288,6 +293,10 @@
       <SubSystem>Windows</SubSystem>
       <AdditionalDependencies>winmm.lib;wsock32.lib;zlib.lib;libcurl.lib;dxguid.lib;dinput8.lib;dsound.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy $(OutDir)r1q2.* c:\quake2\r1q2.*</Command>
+      <Message>Copying files to Quake2 root.</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>

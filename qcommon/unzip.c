@@ -41,7 +41,7 @@ woven in by Terry Thorsen 1/2003.
 #ifdef _WIN32
 #define ZEXPORT __cdecl
 #endif
-#include "zlib.h"
+#include <zlib.h>
 #ifdef _WIN32
 #undef ZEXPORT
 #endif

@@ -40,7 +40,7 @@
 #include <string.h>
 #include <sys/mman.h>
 
-#include <SDL.h>
+#include <SDL2/SDL.h>
 
 #include <GL/gl.h>
 
@@ -509,7 +509,7 @@ void GetEvent(SDL_Event *event)
 
 			SDL_WM_ToggleFullScreen(surface);
 
-			if (surface->flags & SDL_FULLSCREEN) {
+			if (surface->flags & SDL_WINDOW_FULLSCREEN) {
 				ri.Cvar_SetValue( "vid_fullscreen", 1 );
 			} else {
 				ri.Cvar_SetValue( "vid_fullscreen", 0 );
