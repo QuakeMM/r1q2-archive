@@ -86,6 +86,7 @@
     <IncludePath>C:\Users\Geoff\Documents\Visual Studio 2010\Projects\zlib;$(IncludePath)</IncludePath>
     <ReferencePath>C:\Users\Geoff\Documents\Visual Studio 2010\Projects\zlib\Debug;$(ReferencePath)</ReferencePath>
     <LibraryPath>C:\Users\Geoff\Documents\Visual Studio 2010\Projects\zlib\Debug;$(LibraryPath)</LibraryPath>
+    <TargetName>$(ProjectName)x86_64</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -101,6 +102,7 @@
       <PrecompiledHeaderOutputFile>.\./build/temp/game/release\game.pch</PrecompiledHeaderOutputFile>
       <ObjectFileName>.\./build/temp/game/release\</ObjectFileName>
       <ProgramDataBaseFileName>.\./build/temp/game/release\</ProgramDataBaseFileName>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Midl>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -140,6 +142,7 @@
       <PrecompiledHeaderOutputFile>.\./build/temp/game/release\game.pch</PrecompiledHeaderOutputFile>
       <ObjectFileName>.\./build/temp/game/release\</ObjectFileName>
       <ProgramDataBaseFileName>.\./build/temp/game/release\</ProgramDataBaseFileName>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Midl>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -177,6 +180,7 @@
       <PrecompiledHeaderOutputFile>.\./build/temp/game/debug\game.pch</PrecompiledHeaderOutputFile>
       <ObjectFileName>.\./build/temp/game/debug\</ObjectFileName>
       <ProgramDataBaseFileName>.\./build/temp/game/debug\</ProgramDataBaseFileName>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Midl>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -217,6 +221,7 @@
       <PrecompiledHeaderOutputFile>.\./build/temp/game/debug\game.pch</PrecompiledHeaderOutputFile>
       <ObjectFileName>.\./build/temp/game/debug\</ObjectFileName>
       <ProgramDataBaseFileName>.\./build/temp/game/debug\</ProgramDataBaseFileName>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Midl>
       <SuppressStartupBanner>true</SuppressStartupBanner>
