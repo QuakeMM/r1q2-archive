@@ -96,7 +96,13 @@ int SV_FindIndex (const char *name, int start, int maxIndex, qboolean create)
 				Com_Printf ("done.\n", LOG_SERVER|LOG_ERROR);
 			}
 		}
-		Com_Error (ERR_GAME, "SV_FindIndex: overflow finding index for %s", name);
+		if(sv_gamedebug->intvalue)
+			Com_Error (ERR_GAME, "SV_FindIndex: overflow finding index for %s", name);
+		else
+		{
+			Com_Printf("SV_FindIndex: overflow finding index for %s returning index %i\n", LOG_SERVER | LOG_ERROR, name, maxIndex - 1);
+			return (maxIndex - 1);	// Return the last possible index and keep running.
+		}
 	}
 
 	strncpy (sv.configstrings[start+i], name, sizeof(sv.configstrings[i])-1);
