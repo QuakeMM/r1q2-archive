@@ -214,7 +214,8 @@ void EXPORT SV_LinkEdict (edict_t *ent)
 	{
 		if (sv_gamedebug->intvalue)
 		{
-			Com_Printf ("GAME WARNING: SV_LinkEdict: linking entity %d that isn't in use\n", LOG_SERVER|LOG_WARNING|LOG_GAMEDEBUG, NUM_FOR_EDICT(ent));
+			Com_Printf ("GAME WARNING: SV_LinkEdict: linking entity %d that isn't in use\n",
+				LOG_SERVER|LOG_WARNING|LOG_GAMEDEBUG, NUM_FOR_EDICT(ent));
 
 			if (sv_gamedebug->intvalue >= 4)
 				Sys_DebugBreak ();
@@ -232,7 +233,8 @@ void EXPORT SV_LinkEdict (edict_t *ent)
 	{
 		if (ent->s.solid == SOLID_BBOX || ent->s.solid == SOLID_BSP || ent->s.solid == SOLID_TRIGGER)
 		{
-			Com_Printf ("GAME WARNING: SV_LinkEdict: entity %d has unusual s.solid value, did you mean to assign to solid?\n", LOG_SERVER|LOG_WARNING|LOG_GAMEDEBUG, edict_number);
+			Com_Printf ("GAME WARNING: SV_LinkEdict: entity %d has unusual s.solid value, did you mean to assign to solid?\n",
+				LOG_SERVER|LOG_WARNING|LOG_GAMEDEBUG, edict_number);
 
 			if (sv_gamedebug->intvalue >= 4)
 				Sys_DebugBreak ();
@@ -262,14 +264,16 @@ void EXPORT SV_LinkEdict (edict_t *ent)
 			{
 				if ((float)i != (ent->maxs[0]/8))
 				{
-					Com_Printf ("GAME WARNING: Entity %d x/y bounding box mins/maxs (%.2f) does not lie on a quantization boundary (%.2f != %.2f)\n", LOG_SERVER|LOG_WARNING|LOG_GAMEDEBUG, edict_number, ent->maxs[0], (ent->maxs[0]/8), (float)i);
+					Com_Printf ("GAME WARNING: Entity %d x/y bounding box mins/maxs (%.2f) does not lie on a quantization boundary (%.2f != %.2f)\n",
+						LOG_SERVER|LOG_WARNING|LOG_GAMEDEBUG, edict_number, ent->maxs[0], (ent->maxs[0]/8), (float)i);
 					if (sv_gamedebug->intvalue >= 5)
 						Sys_DebugBreak ();
 				}
 
 				if (fabs (ent->maxs[0]) != fabs(ent->maxs[1]) || fabs(ent->mins[0]) != fabs(ent->mins[1]) || fabs (ent->maxs[0]) != fabs(ent->mins[0]))
 				{
-					Com_Printf ("GAME WARNING: Entity %d x/y bounding box mins/maxs are not equal and symmetric\n", LOG_SERVER|LOG_WARNING|LOG_GAMEDEBUG, edict_number);
+					Com_Printf ("GAME WARNING: Entity %d x/y bounding box mins/maxs are not equal and symmetric\n",
+						LOG_SERVER|LOG_WARNING|LOG_GAMEDEBUG, edict_number);
 					if (sv_gamedebug->intvalue >= 5)
 						Sys_DebugBreak ();
 				}
@@ -284,7 +288,8 @@ void EXPORT SV_LinkEdict (edict_t *ent)
 
 			if (sv_gamedebug->intvalue && (float)j != (-ent->mins[2])/8)
 			{
-				Com_Printf ("GAME WARNING: Entity %d z bounding box mins (%.2f) does not lie on a quantization boundary (%.2f != %.2f)\n", LOG_SERVER|LOG_WARNING|LOG_GAMEDEBUG, edict_number, ent->mins[2], (-ent->mins[2])/8, (float)j);
+				Com_Printf ("GAME WARNING: Entity %d z bounding box mins (%.2f) does not lie on a quantization boundary (%.2f != %.2f)\n",
+					LOG_SERVER|LOG_WARNING|LOG_GAMEDEBUG, edict_number, ent->mins[2], (-ent->mins[2])/8, (float)j);
 				if (sv_gamedebug->intvalue >= 5)
 					Sys_DebugBreak ();
 			}
@@ -301,7 +306,8 @@ void EXPORT SV_LinkEdict (edict_t *ent)
 				//special hack to avoid spamming about crouched players
 				if (!(edict_number - 1 < maxclients->intvalue && ent->maxs[2] == 4.0f))
 				{
-					Com_Printf ("GAME WARNING: Entity %d z bounding box maxs (%.2f) does not lie on a quantization boundary (%.2f != %.2f)\n", LOG_SERVER|LOG_WARNING|LOG_GAMEDEBUG, edict_number, ent->maxs[2], ((ent->maxs[2]+32)/8), (float)k);
+					Com_Printf ("GAME WARNING: Entity %d z bounding box maxs (%.2f) does not lie on a quantization boundary (%.2f != %.2f)\n",
+						LOG_SERVER|LOG_WARNING|LOG_GAMEDEBUG, edict_number, ent->maxs[2], ((ent->maxs[2]+32)/8), (float)k);
 					if (sv_gamedebug->intvalue >= 5)
 						Sys_DebugBreak ();
 				}
@@ -625,9 +631,10 @@ static int SV_HullForEntity (const edict_t *ent)
 	{	// explicit hulls in the BSP model
 		model = sv.models[ ent->s.modelindex ];
 
-		if (!model)
-			Com_Error (ERR_FATAL, "MOVETYPE_PUSH with a non bsp model");
-
+		if (!model) {
+			Com_Error(ERR_FATAL, "MOVETYPE_PUSH with a non bsp model");
+			return 0; // Com_Error doesn't return, shut up intellisense.
+		}
 		return model->headnode;
 	}
 
