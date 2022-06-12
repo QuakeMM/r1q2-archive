@@ -608,11 +608,12 @@ void MSG_WriteByte (int c)
 {
 	byte	*buf;
 
-/*#ifdef PARANOID
+#ifdef PARANOID
 	if (c < 0 || c > 255)
 		Com_Error (ERR_FATAL, "MSG_WriteByte: range error");
-#endif*/
-	Q_assert (!(c < 0 || c > 255));
+#endif
+
+	//Q_assert (!(c < 0 || c > 255));
 
 	buf = SZ_GetSpace (&msgbuff, 1);
 	buf[0] = c;
@@ -622,12 +623,13 @@ void MSG_WriteShort (int c)
 {
 	byte	*buf;
 	
-/*#ifdef PARANOID
+#ifdef PARANOID
 	if (c < ((int16)0x8000) || c > (int16)0x7fff)
 		Com_Error (ERR_FATAL, "MSG_WriteShort: range error");
-#endif*/
+
 	//XXX: unsigned shorts are written here too...
-	//Q_assert (!(c < ((int16)0x8000) || c > (int16)0x7fff));
+	Q_assert (!(c < ((int16)0x8000) || c > (int16)0x7fff));
+#endif
 
 	buf = SZ_GetSpace (&msgbuff, 2);
 	buf[0] = c&0xff;
