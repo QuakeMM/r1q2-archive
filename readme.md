@@ -100,6 +100,13 @@ R1Q2 Forums: http://www.r1ch.net/forum/index.php?board=8.0
 
 Notes from QwazyWabbit
 
+Linux
+============
+The make process looks for .depends directories in the binaries tree.
+You must create them in order to successfully build from the repository.
+Do     mkdir -p {r1q2ded,client,game,ref_gl}/.depends
+from within the binaries folder.
+
 Dependencies
 ============
 VS2019 project files updated.
