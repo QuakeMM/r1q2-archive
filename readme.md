@@ -104,7 +104,7 @@ Linux
 ============
 The make process looks for .depends directories in the binaries tree.
 You must create them in order to successfully build from the repository.
-Do     mkdir -p {r1q2ded,client,game,ref_gl}/.depends
+Do     `mkdir -p {r1q2ded,client,game,ref_gl}/.depends`
 from within the binaries folder.
 
 Dependencies
