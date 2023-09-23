@@ -1,9 +1,7 @@
 R1Q2 Client README (short version)
 ==================================
 Thanks for downloading R1Q2! This file is a very quick introduction to some of
-the major changes in the R1Q2 client. Please check out the full client readme at
-http://www.r1ch.net/forum/index.php?topic=105.0 for more details on the new
-features, commands and cvars.
+the major changes in the R1Q2 client.
 
 Things You Need
 ===============
@@ -15,8 +13,7 @@ You can get it from http://www.r1ch.net/stuff/r1gl/ - extract to your Q2 dir.
 The R1Q2 Updater available on the website is also strongly recommended. Run it
 periodically every few weeks to automatically keep all your R1Q2 related files
 up to date. In fact, you should probably run it right now to be sure you really
-have the latest versions of everything. For more information see the ChangeLog
-at http://www.r1ch.net/forum/index.php?topic=106 for what's new in each release.
+have the latest versions of everything.
 
 "I just want to get it working like NoCheat!"
 =============================================
@@ -85,7 +82,7 @@ If you experience any problems with R1Q2 such as crashes or odd behaviour,
 please search the forums first for a possible solution, if nothing similar turns
 up, post a bug report. You don't to register to post on the R1Q2 forums.
 
-Notes from QwazyWabbit
+# Notes from QwazyWabbit:
 
 Linux
 ============
