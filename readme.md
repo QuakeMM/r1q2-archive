@@ -93,7 +93,7 @@ from within the binaries folder.
 
 Dependencies
 ============
-VS2019 project files updated.
-Build now depends on vcpkg libraries.
-Install appropriate triplets for libpng and libjpeg for your target builds.
+VS2019 project files have been updated.
+The build now depends on vcpkg libraries.
+Use vcpkg to install appropriate triplets for openGL, libpng and libjpeg for your target builds.
 
