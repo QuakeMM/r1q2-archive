@@ -181,6 +181,23 @@ static void CL_EscapeHTTPPath (const char *filePath, char *escaped)
 
 /*
 ===============
+CL_HTTP_CurlWrite
+
+Adapted from Yamagi Quake2.
+ libcurl callback for file writing.
+===============
+*/
+static size_t CL_HTTP_CurlWrite(char* data, size_t size, size_t nmemb, void* userdata)
+{
+	dlhandle_t* dl;
+
+	dl = (dlhandle_t*)userdata;
+
+	return fwrite(data, size, nmemb, dl->file);
+}
+
+/*
+===============
 CL_HTTP_Recv
 
 libcurl callback for filelists.
@@ -291,11 +308,12 @@ static void CL_StartHTTPDownload (dlqueue_t *entry, dlhandle_t *dl)
 	curl_easy_setopt (dl->curl, CURLOPT_ENCODING, "");
 	//curl_easy_setopt (dl->curl, CURLOPT_DEBUGFUNCTION, CL_CURL_Debug);
 	//curl_easy_setopt (dl->curl, CURLOPT_VERBOSE, 1);
+	curl_easy_setopt(dl->curl, CURLOPT_WRITEDATA, dl);
 	curl_easy_setopt (dl->curl, CURLOPT_NOPROGRESS, 0);
 	if (dl->file)
 	{
 		curl_easy_setopt (dl->curl, CURLOPT_WRITEDATA, dl->file);
-		curl_easy_setopt (dl->curl, CURLOPT_WRITEFUNCTION, NULL);
+		curl_easy_setopt (dl->curl, CURLOPT_WRITEFUNCTION, CL_HTTP_CurlWrite);
 	}
 	else
 	{
