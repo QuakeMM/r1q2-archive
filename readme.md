@@ -1,9 +1,7 @@
 R1Q2 Client README (short version)
 ==================================
 Thanks for downloading R1Q2! This file is a very quick introduction to some of
-the major changes in the R1Q2 client. Please check out the full client readme at
-http://www.r1ch.net/forum/index.php?topic=105.0 for more details on the new
-features, commands and cvars.
+the major changes in the R1Q2 client.
 
 Things You Need
 ===============
@@ -15,8 +13,7 @@ You can get it from http://www.r1ch.net/stuff/r1gl/ - extract to your Q2 dir.
 The R1Q2 Updater available on the website is also strongly recommended. Run it
 periodically every few weeks to automatically keep all your R1Q2 related files
 up to date. In fact, you should probably run it right now to be sure you really
-have the latest versions of everything. For more information see the ChangeLog
-at http://www.r1ch.net/forum/index.php?topic=106 for what's new in each release.
+have the latest versions of everything.
 
 "I just want to get it working like NoCheat!"
 =============================================
@@ -81,35 +78,22 @@ R1Q2 will load the standard pakXX.pak followed by the remaining pak files in
 alphabetical order. Remember that files in paks that are loaded last are used 
 first, ie pak3.pak overrides pak0.pak, sounds.pak overrides pak9.pak, etc.
 
-For more information, please see the full readme on the forums:
-http://www.r1ch.net/forum/index.php?topic=105.0
-
 If you experience any problems with R1Q2 such as crashes or odd behaviour,
 please search the forums first for a possible solution, if nothing similar turns
 up, post a bug report. You don't to register to post on the R1Q2 forums.
 
-Links
-=====
-R1Q2 Homepage: http://www.r1ch.net/stuff/r1q2/
-R1GL Homepage: http://www.r1ch.net/stuff/r1gl/
-R1Q2 Forums: http://www.r1ch.net/forum/index.php?board=8.0
-
-"Getting R1Q2 to work proper": http://cato.troligt.com/filer/r1q2.htm
-"How to install R1Q2": http://www.kontula.net/comments.php?id=145
-"r1q2 faq" (English/Estonian): http://r1q2.quake2.ee/
-
-Notes from QwazyWabbit
+# Notes from QwazyWabbit:
 
 Linux
 ============
 The make process looks for .depends directories in the binaries tree.
 You must create them in order to successfully build from the repository.
-Do     mkdir -p {r1q2ded,client,game,ref_gl}/.depends
+Do     `mkdir -p {r1q2ded,client,game,ref_gl}/.depends`
 from within the binaries folder.
 
 Dependencies
 ============
-VS2019 project files updated.
-Build now depends on vcpkg libraries.
-Install appropriate triplets for libpng and libjpeg for your target builds.
+VS2019 project files have been updated.
+The build now depends on vcpkg libraries.
+Use vcpkg to install appropriate triplets for openGL, libpng and libjpeg for your target builds.
 
